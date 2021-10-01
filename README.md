@@ -16,7 +16,10 @@ O objetivo desta aplicação é desenvolver testes unitários para validar uma A
 * Utilizar a tecnica de TDD em 2 funcionaliades importantes: incremento e decremento do número de cervejas no estoque.
 
 ------
+## Plus
 
+- Foi desenvolvido também uma nova funcionalidade de busca pelo tipo de cerveja, e também os testes unitarios desta função.
+------
 ## Tecnologias & bibliotecas utilizadas 💻
 
 - Spring-boot
@@ -41,7 +44,6 @@ O objetivo desta aplicação é desenvolver testes unitários para validar uma A
 
 # Primeiramente clone o repositorio
 $ git clone https://github.com/Joaquimlagos/beers_api_dio.git
-
 
 # Agora, verifique se você tem o maven instalado
 $ mvn -v
