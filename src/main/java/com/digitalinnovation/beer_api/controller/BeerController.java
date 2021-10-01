@@ -1,10 +1,12 @@
 package com.digitalinnovation.beer_api.controller;
 
+import com.digitalinnovation.beer_api.enums.BeerType;
 import lombok.AllArgsConstructor;
 import com.digitalinnovation.beer_api.dto.BeerDTO;
 import com.digitalinnovation.beer_api.dto.QuantityDTO;
 import com.digitalinnovation.beer_api.exception.BeerAlreadyRegisteredException;
 import com.digitalinnovation.beer_api.exception.BeerNotFoundException;
+import com.digitalinnovation.beer_api.exception.BeerTypeNotFoundExeption;
 import com.digitalinnovation.beer_api.exception.BeerStockExceededException;
 import com.digitalinnovation.beer_api.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,11 @@ public class BeerController implements BeerControllerDocs {
     @GetMapping("/{name}")
     public BeerDTO findByName(@PathVariable String name) throws BeerNotFoundException {
         return beerService.findByName(name);
+    }
+
+    @GetMapping("/type/{type}")
+    public List<BeerDTO> findByType(@PathVariable BeerType type) throws BeerTypeNotFoundExeption {
+        return beerService.findByType(type);
     }
 
     @GetMapping

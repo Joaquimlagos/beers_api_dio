@@ -7,6 +7,7 @@ import com.digitalinnovation.beer_api.entity.Beer;
 import com.digitalinnovation.beer_api.exception.BeerAlreadyRegisteredException;
 import com.digitalinnovation.beer_api.exception.BeerNotFoundException;
 import com.digitalinnovation.beer_api.exception.BeerStockExceededException;
+import com.digitalinnovation.beer_api.exception.BeerTypeNotFoundExeption;
 import com.digitalinnovation.beer_api.mapper.BeerMapper;
 import com.digitalinnovation.beer_api.repository.BeerRepository;
 import org.junit.jupiter.api.Test;
@@ -103,6 +104,28 @@ public class BeerServiceTest {
     when(beerRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
 
     List<BeerDTO> foundListBeersDTO = beerService.listAll();
+
+    assertThat(foundListBeersDTO, is(empty()));
+  }
+
+  @Test
+  void whenListBeerIsCalledByTypeThenReturnAListOfBeers() throws BeerTypeNotFoundExeption {
+    BeerDTO expectedFoundBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+    Beer expectedFoundBeer = beerMapper.toModel(expectedFoundBeerDTO);
+
+    when(beerRepository.findByType(expectedFoundBeer.getType())).thenReturn(Collections.singletonList(expectedFoundBeer));
+
+    List<BeerDTO> foundListBeersDTO = beerService.findByType(expectedFoundBeerDTO.getType());
+
+    assertThat(foundListBeersDTO, is(not(empty())));
+    assertThat(foundListBeersDTO.get(0), is(equalTo(expectedFoundBeerDTO)));
+  }
+
+  @Test
+  void whenListBeerIsCalledByTypeThenReturnAnEmptyListOfBeers() throws BeerTypeNotFoundExeption {
+    when(beerRepository.findByType(null)).thenReturn(Collections.EMPTY_LIST);
+
+    List<BeerDTO> foundListBeersDTO = beerService.findByType(null);
 
     assertThat(foundListBeersDTO, is(empty()));
   }
