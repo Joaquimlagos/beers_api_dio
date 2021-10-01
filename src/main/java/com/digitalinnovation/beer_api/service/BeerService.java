@@ -1,5 +1,7 @@
 package com.digitalinnovation.beer_api.service;
 
+import com.digitalinnovation.beer_api.enums.BeerType;
+import com.digitalinnovation.beer_api.exception.BeerTypeNotFoundExeption;
 import lombok.AllArgsConstructor;
 import com.digitalinnovation.beer_api.dto.BeerDTO;
 import com.digitalinnovation.beer_api.entity.Beer;
@@ -33,6 +35,13 @@ public class BeerService {
         Beer foundBeer = beerRepository.findByName(name)
                 .orElseThrow(() -> new BeerNotFoundException(name));
         return beerMapper.toDTO(foundBeer);
+    }
+
+    public List<BeerDTO> findByType(BeerType type) throws BeerTypeNotFoundExeption {
+      return beerRepository.findByType(type)
+              .stream()
+              .map(beerMapper::toDTO)
+              .collect(Collectors.toList());
     }
 
     public List<BeerDTO> listAll() {
